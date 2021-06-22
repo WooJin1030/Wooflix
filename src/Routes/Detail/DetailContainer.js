@@ -17,6 +17,7 @@ const DetailClass = class extends React.Component {
       history: { push },
       location: { pathname },
     } = this.props;
+
     this.isMovie = pathname.includes("/movie/");
 
     const parsedId = parseInt(id);
