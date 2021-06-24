@@ -1,4 +1,5 @@
 import React from "react";
+import { Link, Route, withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import Helmet from "react-helmet";
@@ -68,64 +69,123 @@ const Overview = styled.p`
   width: 70%;
 `;
 
-const DetailPresenter = ({ result, error, loading }) =>
-  loading ? (
-    <>
-      <Helmet>
-        <title>Loading | Wooflix</title>
-      </Helmet>
-      <Loader />
-    </>
-  ) : (
-    <Container>
-      <Helmet>
-        <title>
-          {result.original_title ? result.original_title : result.original_name}{" "}
-          | Wooflix
-        </title>
-      </Helmet>
-      <Backdrop
-        bgImage={`https://image.tmdb.org/t/p/original${result.backdrop_path}`}
-      />
-      <Content>
-        <Cover
-          bgImage={
-            result.poster_path
-              ? `https://image.tmdb.org/t/p/original${result.poster_path}`
-              : require("../../assets/noPosterSmall.jpg")
-          }
-        />
-        <Data>
-          <Title>
+const Imdb = styled.div`
+  width: fit-content;
+  background-color: gray;
+  border-radius: 8px;
+  padding: 0 8px;
+  margin-top: 16px;
+
+  &:hover {
+    transform: scale(1.1);
+  }
+  transition: transform 300ms ease-in;
+`;
+
+const ImdbLogo = styled.img`
+  width: 40px;
+  height: 30px;
+  margin-right: 8px;
+`;
+
+const ImdbSite = styled.a`
+  display: flex;
+  align-items: center;
+`;
+
+const MetaList = styled.ul`
+  display: flex;
+  margin-top: 24px;
+`;
+
+const MetaItem = styled.li`
+  border: 1px solid white;
+  border-radius: 16px;
+  padding: 4px 16px;
+  font-size: 16px;
+  :first-child {
+    margin-right: 16px;
+  }
+`;
+
+const DetailPresenter = withRouter(
+  ({ location: { pathname }, result, error, loading }) =>
+    loading ? (
+      <>
+        <Helmet>
+          <title>Loading | Wooflix</title>
+        </Helmet>
+        <Loader />
+      </>
+    ) : (
+      <Container>
+        <Helmet>
+          <title>
             {result.original_title
               ? result.original_title
-              : result.original_name}
-          </Title>
-          <ItemContainer>
-            <Item>
-              {result.release_date
-                ? result.release_date.substring(0, 4)
-                : result.first_air_date.substring(0, 4)}
-            </Item>
-            <Divider>|</Divider>
-            <Item>
-              {result.runtime ? result.runtime : result.episode_run_time[0]} min
-            </Item>
-            <Divider>|</Divider>
-            <Item>
-              {result.genres &&
-                result.genres.map((genre, index) =>
-                  index === result.genres.length - 1
-                    ? genre.name
-                    : `${genre.name} / `
-                )}{" "}
-            </Item>
-          </ItemContainer>
-          <Overview>{result.overview}</Overview>
-        </Data>
-      </Content>
-    </Container>
-  );
+              : result.original_name}{" "}
+            | Wooflix
+          </title>
+        </Helmet>
+        <Backdrop
+          bgImage={`https://image.tmdb.org/t/p/original${result.backdrop_path}`}
+        />
+        <Content>
+          <Cover
+            bgImage={
+              result.poster_path
+                ? `https://image.tmdb.org/t/p/original${result.poster_path}`
+                : require("../../assets/noPosterSmall.jpg")
+            }
+          />
+          <Data>
+            <Title>
+              {result.original_title
+                ? result.original_title
+                : result.original_name}
+            </Title>
+            <ItemContainer>
+              <Item>
+                {result.release_date
+                  ? result.release_date.substring(0, 4)
+                  : result.first_air_date.substring(0, 4)}
+              </Item>
+              <Divider>|</Divider>
+              <Item>
+                {result.runtime ? result.runtime : result.episode_run_time[0]}{" "}
+                min
+              </Item>
+              <Divider>|</Divider>
+              <Item>
+                {result.genres &&
+                  result.genres.map((genre, index) =>
+                    index === result.genres.length - 1
+                      ? genre.name
+                      : `${genre.name} / `
+                  )}{" "}
+              </Item>
+            </ItemContainer>
+            <Overview>{result.overview}</Overview>
+            <Imdb>
+              {result.imdb_id && (
+                <ImdbSite href={`https://www.imdb.com/title/${result.imdb_id}`}>
+                  <ImdbLogo
+                    src="https://user-images.githubusercontent.com/62231339/123267872-71db1480-d538-11eb-9fe2-22f3f2606795.png"
+                    alt="imdb logo"
+                  />
+                  Watch in IMDb
+                </ImdbSite>
+              )}
+            </Imdb>
+            <MetaList>
+              <MetaItem>Production</MetaItem>
+              <MetaItem>Youtube Videos</MetaItem>
+            </MetaList>
+          </Data>
+        </Content>
+      </Container>
+    )
+);
 
 DetailPresenter.propTypes = {
   result: PropTypes.object,
