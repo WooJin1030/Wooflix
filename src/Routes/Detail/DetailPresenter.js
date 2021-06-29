@@ -1,5 +1,8 @@
 import React from "react";
-import { Link, Route, withRouter } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
+import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
+import ReactPlayer from "react-player";
+import "react-tabs/style/react-tabs.css";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import Helmet from "react-helmet";
@@ -69,12 +72,18 @@ const Overview = styled.p`
   width: 70%;
 `;
 
-const Imdb = styled.div`
+const PageContainer = styled.div`
+  display: flex;
+`;
+
+const Page = styled.div`
   width: fit-content;
   background-color: gray;
   border-radius: 8px;
   padding: 0 8px;
   margin-top: 16px;
+  margin-bottom: 16px;
+  margin-right: 12px;
 
   &:hover {
     transform: scale(1.1);
@@ -82,30 +91,111 @@ const Imdb = styled.div`
   transition: transform 300ms ease-in;
 `;
 
-const ImdbLogo = styled.img`
+const PageLogo = styled.img`
   width: 40px;
   height: 30px;
   margin-right: 8px;
 `;
 
-const ImdbSite = styled.a`
+const PageSite = styled.a`
+  display: flex;
+  align-items: center;
+  line-height: 30px;
+`;
+
+const DetailTabs = styled(Tabs)`
+  width: 80%;
+  min-height: 40vh;
+  margin: auto;
+  margin-top: 16px;
+`;
+
+const DetailTabPanels = styled(TabPanel)``;
+
+const ProductionContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const ProductTitle = styled.h2`
+  font-size: 16px;
+  margin: 16px 0;
+  color: #ff0000;
+`;
+
+const ProductCountries = styled.div`
+  display: flex;
+`;
+
+const ProductCountry = styled.span`
+  font-size: 12px;
+  margin-right: 4px;
+  opacity: 0.7;
+`;
+
+const ProductCompanies = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+`;
+
+const ProductItem = styled.div`
+  width: 20%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+const ProductImage = styled.img`
+  max-width: 80%;
+  max-height: 100px;
+  margin-bottom: 8px;
+  background-color: white;
+  opacity: 0.7;
+  padding: 8px;
+  border-radius: 8px;
+`;
+
+const ProductMeta = styled.span`
+  font-size: 12px;
+  opacity: 0.7;
+`;
+
+const TrailerContainer = styled.div`
+  font-size: 14px;
+  height: 50vh;
+  overflow-y: scroll;
+`;
+
+const Trailer = styled.div`
+  margin-bottom: 16px;
+`;
+
+const TrailerA = styled.a``;
+
+const Player = styled(ReactPlayer)`
+  margin-top: 8px;
+`;
+
+const CollectionConatainer = styled.div`
+  margin-top: 24px;
+  font-size: 16px;
   display: flex;
   align-items: center;
 `;
 
-const MetaList = styled.ul`
-  display: flex;
-  margin-top: 24px;
+const CollectionExist = styled.span`
+  margin-right: 8px;
 `;
 
-const MetaItem = styled.li`
-  border: 1px solid white;
-  border-radius: 16px;
-  padding: 4px 16px;
-  font-size: 16px;
-  :first-child {
-    margin-right: 16px;
+const CollectionLink = styled.h3`
+  &:hover {
+    transform: scale(1.1);
+    color: #e50914;
   }
+  transition: transform 300ms ease-in;
 `;
 
 const DetailPresenter = withRouter(
@@ -152,7 +242,9 @@ const DetailPresenter = withRouter(
               </Item>
               <Divider>|</Divider>
               <Item>
-                {result.runtime ? result.runtime : result.episode_run_time[0]}{" "}
+                {result.runtime || result.runtime === 0
+                  ? result.runtime
+                  : result.episode_run_time[0]}{" "}
                 min
               </Item>
               <Divider>|</Divider>
@@ -166,21 +258,108 @@ const DetailPresenter = withRouter(
               </Item>
             </ItemContainer>
             <Overview>{result.overview}</Overview>
-            <Imdb>
+            <PageContainer>
               {result.imdb_id && (
-                <ImdbSite href={`https://www.imdb.com/title/${result.imdb_id}`}>
-                  <ImdbLogo
-                    src="https://user-images.githubusercontent.com/62231339/123267872-71db1480-d538-11eb-9fe2-22f3f2606795.png"
-                    alt="imdb logo"
-                  />
-                  Watch in IMDb
-                </ImdbSite>
+                <Page key="page1">
+                  <PageSite
+                    href={`https://www.imdb.com/title/${result.imdb_id}`}
+                  >
+                    <PageLogo
+                      src="https://user-images.githubusercontent.com/62231339/123267872-71db1480-d538-11eb-9fe2-22f3f2606795.png"
+                      alt="imdb logo"
+                    />
+                    Watch in IMDb
+                  </PageSite>
+                </Page>
               )}
-            </Imdb>
-            <MetaList>
-              <MetaItem>Production</MetaItem>
-              <MetaItem>Youtube Videos</MetaItem>
-            </MetaList>
+
+              {result.homepage && (
+                <Page key="page2">
+                  <PageSite href={result.homepage}>
+                    Move to Official Homepage
+                  </PageSite>
+                </Page>
+              )}
+            </PageContainer>
+
+            <DetailTabs>
+              <TabList>
+                <Tab>Productions</Tab>
+                <Tab>Youtube Videos</Tab>
+                <Tab>Series</Tab>
+              </TabList>
+              <DetailTabPanels>
+                <ProductionContainer>
+                  <ProductTitle>Product Country</ProductTitle>
+                  <ProductCountries>
+                    {result.production_countries.map((country, index) =>
+                      index === result.production_countries.length - 1 ? (
+                        <ProductCountry key={country.iso_3166_1}>
+                          {country.name}
+                        </ProductCountry>
+                      ) : (
+                        <ProductCountry key={country.iso_3166_1}>
+                          {country.name},{" "}
+                        </ProductCountry>
+                      )
+                    )}
+                  </ProductCountries>
+
+                  <ProductTitle>Product Companies</ProductTitle>
+                  <ProductCompanies>
+                    {result.production_companies.map((company, index) => (
+                      <ProductItem key={company.id}>
+                        {
+                          <>
+                            <ProductImage
+                              src={
+                                company.logo_path !== null
+                                  ? `https://image.tmdb.org/t/p/original${company.logo_path}`
+                                  : "https://user-images.githubusercontent.com/62231339/123788471-05388f00-d917-11eb-8459-0d366f77da4c.png"
+                              }
+                              alt="logo"
+                            />
+                            <ProductMeta>
+                              {company.name} / {company.origin_country}
+                            </ProductMeta>
+                          </>
+                        }
+                      </ProductItem>
+                    ))}
+                  </ProductCompanies>
+                </ProductionContainer>
+              </DetailTabPanels>
+              <DetailTabPanels>
+                <TrailerContainer>
+                  {result.videos.results.map((video) => (
+                    <Trailer key={video.id}>
+                      <TrailerA
+                        href={`https://www.youtube.com/watch?v=${video.key}`}
+                      >
+                        {video.name}
+                      </TrailerA>
+                      <Player
+                        url={`https://www.youtube.com/watch?v=${video.key}`}
+                      />
+                    </Trailer>
+                  ))}
+                </TrailerContainer>
+              </DetailTabPanels>
+              <DetailTabPanels>
+                <CollectionConatainer>
+                  {result.belongs_to_collection && (
+                    <>
+                      <CollectionExist>Watch Other Series?</CollectionExist>
+                      <Link
+                        to={`/collection/${result.belongs_to_collection.id}`}
+                      >
+                        <CollectionLink>➜</CollectionLink>
+                      </Link>
+                    </>
+                  )}
+                </CollectionConatainer>
+              </DetailTabPanels>
+            </DetailTabs>
           </Data>
         </Content>
       </Container>

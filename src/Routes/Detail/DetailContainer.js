@@ -33,7 +33,8 @@ const DetailClass = class extends React.Component {
       } else {
         ({ data: result } = await tvApi.showDetail(parsedId));
       }
-      // console.log(result);
+
+      console.log(result);
     } catch (err) {
       this.setState({ error: "Can't find anything" });
     } finally {
@@ -43,7 +44,6 @@ const DetailClass = class extends React.Component {
 
   render() {
     const { result, error, loading } = this.state;
-    console.log(result);
     return <DetailPresenter result={result} error={error} loading={loading} />;
   }
 };
