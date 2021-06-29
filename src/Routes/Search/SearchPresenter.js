@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import Helmet from "react-helmet";
-import Loader from "Components/Loader";
+import LoaderSpinner from "Components/Loader";
 import Section from "Components/Section";
 import Message from "Components/Message";
 import Poster from "Components/Poster";
@@ -12,6 +12,7 @@ const Container = styled.div`
 `;
 
 const Form = styled.form`
+  margin-top: 24px;
   margin-bottom: 50px;
   width: 100%;
 `;
@@ -43,7 +44,7 @@ const SearchPresenter = ({
       />
     </Form>
     {loading ? (
-      <Loader />
+      <LoaderSpinner />
     ) : (
       <>
         {movieResults && movieResults.length > 0 && (

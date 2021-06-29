@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import Helmet from "react-helmet";
-import Loader from "Components/Loader";
+import LoaderSpinner from "Components/Loader";
 
 const Container = styled.div`
   height: calc(100vh - 50px);
@@ -106,7 +106,7 @@ const CollectionPresenter = ({ result, error, loading }) => (
       <title>Loading | Wooflix</title>
     </Helmet>
     {loading ? (
-      <Loader />
+      <LoaderSpinner />
     ) : (
       <Container>
         <Helmet>

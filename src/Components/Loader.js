@@ -1,21 +1,24 @@
 import React from "react";
 import styled from "styled-components";
+import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
+import Loader from "react-loader-spinner";
 
-const Container = styled.div`
-  height: 100vh;
+const SLoader = styled(Loader)`
+  height: calc(100vh - 50px);
   width: 100vw;
   display: flex;
   justify-content: center;
-  font-size: 28px;
-  margin-top: 20px;
+  align-items: center;
 `;
 
-const Loader = () => (
-  <Container>
-    <span role="img" aria-label="Loading">
-      ⏰
-    </span>
-  </Container>
+const LoaderSpinner = () => (
+  <SLoader
+    type="Puff"
+    color="#ff0000"
+    height={100}
+    width={100}
+    timeout={3000}
+  />
 );
 
-export default Loader;
+export default LoaderSpinner;
