@@ -35,7 +35,7 @@
       "react-app/jest"
     ]
   },
-  "homepage": "https://woojin1030.github.io/Wooflix",
+  "homepage": "https://infallible-chandrasekhar-96cefd.netlify.app/",
   "browserslist": {
     "production": [
       ">0.2%",
