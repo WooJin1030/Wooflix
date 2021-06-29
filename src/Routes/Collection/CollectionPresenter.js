@@ -155,4 +155,10 @@ const CollectionPresenter = ({ result, error, loading }) => (
   </>
 );
 
+CollectionPresenter.propTypes = {
+  result: PropTypes.object,
+  error: PropTypes.string,
+  loading: PropTypes.bool.isRequired,
+};
+
 export default CollectionPresenter;
