@@ -1,21 +1,21 @@
 {
   "files": {
-    "main.js": "/wooflix/static/js/main.43d85345.chunk.js",
-    "main.js.map": "/wooflix/static/js/main.43d85345.chunk.js.map",
-    "runtime-main.js": "/wooflix/static/js/runtime-main.10681128.js",
-    "runtime-main.js.map": "/wooflix/static/js/runtime-main.10681128.js.map",
-    "static/css/2.c5867089.chunk.css": "/wooflix/static/css/2.c5867089.chunk.css",
-    "static/js/2.d1ce336c.chunk.js": "/wooflix/static/js/2.d1ce336c.chunk.js",
-    "static/js/2.d1ce336c.chunk.js.map": "/wooflix/static/js/2.d1ce336c.chunk.js.map",
-    "index.html": "/wooflix/index.html",
-    "static/css/2.c5867089.chunk.css.map": "/wooflix/static/css/2.c5867089.chunk.css.map",
-    "static/js/2.d1ce336c.chunk.js.LICENSE.txt": "/wooflix/static/js/2.d1ce336c.chunk.js.LICENSE.txt",
-    "static/media/noPosterSmall.jpg": "/wooflix/static/media/noPosterSmall.fb413894.jpg"
+    "main.js": "/Wooflix/static/js/main.43d85345.chunk.js",
+    "main.js.map": "/Wooflix/static/js/main.43d85345.chunk.js.map",
+    "runtime-main.js": "/Wooflix/static/js/runtime-main.e0f0d57f.js",
+    "runtime-main.js.map": "/Wooflix/static/js/runtime-main.e0f0d57f.js.map",
+    "static/css/2.c5867089.chunk.css": "/Wooflix/static/css/2.c5867089.chunk.css",
+    "static/js/2.c816ffc3.chunk.js": "/Wooflix/static/js/2.c816ffc3.chunk.js",
+    "static/js/2.c816ffc3.chunk.js.map": "/Wooflix/static/js/2.c816ffc3.chunk.js.map",
+    "index.html": "/Wooflix/index.html",
+    "static/css/2.c5867089.chunk.css.map": "/Wooflix/static/css/2.c5867089.chunk.css.map",
+    "static/js/2.c816ffc3.chunk.js.LICENSE.txt": "/Wooflix/static/js/2.c816ffc3.chunk.js.LICENSE.txt",
+    "static/media/noPosterSmall.jpg": "/Wooflix/static/media/noPosterSmall.fb413894.jpg"
   },
   "entrypoints": [
-    "static/js/runtime-main.10681128.js",
+    "static/js/runtime-main.e0f0d57f.js",
     "static/css/2.c5867089.chunk.css",
-    "static/js/2.d1ce336c.chunk.js",
+    "static/js/2.c816ffc3.chunk.js",
     "static/js/main.43d85345.chunk.js"
   ]
 }
