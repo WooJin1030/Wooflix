@@ -39,10 +39,6 @@ const Data = styled.div`
 `;
 
 const Cover = styled.div`
-  position: -webkit-sticky;
-  position: sticky;
-  top: 20px;
-
   width: 30%;
   height: 100%;
   background-image: url(${(props) => props.bgImage});
@@ -65,8 +61,10 @@ const Overview = styled.p`
 
 const Series = styled.ul`
   width: 100%;
-  height: 100%;
+  height: 90%;
   margin-top: 24px;
+
+  overflow-y: scroll;
 `;
 
 const SeriesItem = styled.li`
@@ -86,7 +84,7 @@ const SeriesCover = styled.div`
   opacity: 0.7;
 `;
 
-const SeriesMeta = styled.div`
+const SeriesMeta = styled.a`
   width: 80%;
 `;
 
@@ -122,7 +120,7 @@ const CollectionPresenter = ({ result, error, loading }) => (
             bgImage={
               result.poster_path
                 ? `https://image.tmdb.org/t/p/original${result.poster_path}`
-                : require("../../assets/noPosterSmall.jpg")
+                : "https://user-images.githubusercontent.com/62231339/123789813-86445600-d918-11eb-8cf5-417dc0c70df6.jpg"
             }
           />
           <Data>
@@ -137,10 +135,10 @@ const CollectionPresenter = ({ result, error, loading }) => (
                       bgImage={
                         part.poster_path
                           ? `https://image.tmdb.org/t/p/original${part.poster_path}`
-                          : require("../../assets/noPosterSmall.jpg")
+                          : "https://user-images.githubusercontent.com/62231339/123789813-86445600-d918-11eb-8cf5-417dc0c70df6.jpg"
                       }
                     />
-                    <SeriesMeta>
+                    <SeriesMeta href={`/movie/${part.id}`}>
                       <SeriesTitle>{part.original_title}</SeriesTitle>
                       <SeriesOverview>
                         {part.overview.substring(0, 300)}...

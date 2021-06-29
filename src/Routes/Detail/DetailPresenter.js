@@ -110,7 +110,23 @@ const DetailTabs = styled(Tabs)`
   margin-top: 16px;
 `;
 
-const DetailTabPanels = styled(TabPanel)``;
+const DetailTab = styled(Tab)`
+  display: inline-block;
+  border: 1px solid transparent;
+  border-bottom: none;
+  bottom: -1px;
+  position: relative;
+  list-style: none;
+  padding: 6px 12px;
+  cursor: pointer;
+
+  ::selection {
+    background: #fff;
+    border-color: #aaa;
+    color: black;
+    border-radius: 5px 5px 0 0;
+  }
+`;
 
 const ProductionContainer = styled.div`
   display: flex;
@@ -236,9 +252,8 @@ const DetailPresenter = withRouter(
             </Title>
             <ItemContainer>
               <Item>
-                {result.release_date
-                  ? result.release_date.substring(0, 4)
-                  : result.first_air_date.substring(0, 4)}
+                {result.release_date && result.release_date.substring(0, 4)}
+                {result.first_air_date && result.first_air_date.substring(0, 4)}
               </Item>
               <Divider>|</Divider>
               <Item>
@@ -284,11 +299,11 @@ const DetailPresenter = withRouter(
 
             <DetailTabs>
               <TabList>
-                <Tab>Productions</Tab>
-                <Tab>Youtube Videos</Tab>
-                <Tab>Series</Tab>
+                <DetailTab>Productions</DetailTab>
+                <DetailTab>Youtube Videos</DetailTab>
+                <DetailTab>Series</DetailTab>
               </TabList>
-              <DetailTabPanels>
+              <TabPanel>
                 <ProductionContainer>
                   <ProductTitle>Product Country</ProductTitle>
                   <ProductCountries>
@@ -319,17 +334,22 @@ const DetailPresenter = withRouter(
                               }
                               alt="logo"
                             />
-                            <ProductMeta>
-                              {company.name} / {company.origin_country}
-                            </ProductMeta>
+
+                            {company.origin_country ? (
+                              <ProductMeta>
+                                {company.name} / {company.origin_country}{" "}
+                              </ProductMeta>
+                            ) : (
+                              <ProductMeta> {company.name}</ProductMeta>
+                            )}
                           </>
                         }
                       </ProductItem>
                     ))}
                   </ProductCompanies>
                 </ProductionContainer>
-              </DetailTabPanels>
-              <DetailTabPanels>
+              </TabPanel>
+              <TabPanel>
                 <TrailerContainer>
                   {result.videos.results.map((video) => (
                     <Trailer key={video.id}>
@@ -344,8 +364,8 @@ const DetailPresenter = withRouter(
                     </Trailer>
                   ))}
                 </TrailerContainer>
-              </DetailTabPanels>
-              <DetailTabPanels>
+              </TabPanel>
+              <TabPanel>
                 <CollectionConatainer>
                   {result.belongs_to_collection && (
                     <>
@@ -358,7 +378,7 @@ const DetailPresenter = withRouter(
                     </>
                   )}
                 </CollectionConatainer>
-              </DetailTabPanels>
+              </TabPanel>
             </DetailTabs>
           </Data>
         </Content>

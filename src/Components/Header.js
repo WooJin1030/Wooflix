@@ -26,7 +26,7 @@ const Item = styled.li`
   height: 50px;
   text-align: center;
   border-bottom: 5px solid
-    ${(props) => (props.current ? "#3498db" : "transparent")};
+    ${(props) => (props.current ? "#E50914" : "transparent")};
   transition: border-bottom 500ms ease-in-out;
 `;
 
@@ -41,10 +41,10 @@ const Header = ({ location: { pathname } }) => {
   return (
     <SHeader>
       <List>
-        <Item current={pathname === "/"}>
+        <Item current={pathname === "/" || pathname.includes("movie")}>
           <SLink to="/">Movies</SLink>
         </Item>
-        <Item current={pathname === "/tv"}>
+        <Item current={pathname === "/tv" || pathname.includes("show")}>
           <SLink to="/tv">TV</SLink>
         </Item>
         <Item current={pathname === "/search"}>
