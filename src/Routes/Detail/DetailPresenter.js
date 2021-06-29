@@ -110,22 +110,26 @@ const DetailTabs = styled(Tabs)`
   margin-top: 16px;
 `;
 
-const DetailTab = styled(Tab)`
-  display: inline-block;
-  border: 1px solid transparent;
-  border-bottom: none;
-  bottom: -1px;
-  position: relative;
-  list-style: none;
-  padding: 6px 12px;
-  cursor: pointer;
+const CreatorContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+`;
 
-  ::selection {
-    background: #fff;
-    border-color: #aaa;
-    color: black;
-    border-radius: 5px 5px 0 0;
-  }
+const Creators = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-top: 12px;
+  width: 30%;
+  height: 100%;
+`;
+
+const CreatorImg = styled.img`
+  width: 80%;
+`;
+
+const CreatorName = styled.span`
+  font-size: 16px;
 `;
 
 const ProductionContainer = styled.div`
@@ -214,6 +218,34 @@ const CollectionLink = styled.h3`
   transition: transform 300ms ease-in;
 `;
 
+const SeasonContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 24px;
+
+  overflow-x: scroll;
+  overflow-y: hidden;
+`;
+
+const Seasons = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  justify-content: center;
+
+  width: 30%;
+  height: 40vh;
+`;
+
+const SeasonImg = styled.img`
+  padding: 24px;
+`;
+
+const SeasonName = styled.span`
+  font-size: 16px;
+`;
+
 const DetailPresenter = withRouter(
   ({ location: { pathname }, result, error, loading }) =>
     loading ? (
@@ -281,7 +313,7 @@ const DetailPresenter = withRouter(
                   >
                     <PageLogo
                       src="https://user-images.githubusercontent.com/62231339/123267872-71db1480-d538-11eb-9fe2-22f3f2606795.png"
-                      alt="imdb logo"
+                      alt="page img"
                     />
                     Watch in IMDb
                   </PageSite>
@@ -299,10 +331,32 @@ const DetailPresenter = withRouter(
 
             <DetailTabs>
               <TabList>
-                <DetailTab>Productions</DetailTab>
-                <DetailTab>Youtube Videos</DetailTab>
-                <DetailTab>Series</DetailTab>
+                {pathname.includes("show") && <Tab>Creator</Tab>}
+                <Tab>Productions</Tab>
+                <Tab>Youtube Videos</Tab>
+                {pathname.includes("movie") && <Tab>Series</Tab>}
+                {pathname.includes("show") && <Tab>Seasons</Tab>}
               </TabList>
+              {pathname.includes("show") && (
+                <TabPanel>
+                  <CreatorContainer>
+                    {result.created_by &&
+                      result.created_by.map((creator) => (
+                        <Creators key={creator.id}>
+                          <CreatorImg
+                            src={
+                              creator.profile_path
+                                ? `https://image.tmdb.org/t/p/original${creator.profile_path}`
+                                : "https://user-images.githubusercontent.com/62231339/123796388-0c17cf80-d920-11eb-87d7-50dc9e5b628d.jpg"
+                            }
+                            alt="creator img"
+                          ></CreatorImg>
+                          <CreatorName>{creator.name}</CreatorName>
+                        </Creators>
+                      ))}
+                  </CreatorContainer>
+                </TabPanel>
+              )}
               <TabPanel>
                 <ProductionContainer>
                   <ProductTitle>Product Country</ProductTitle>
@@ -365,20 +419,45 @@ const DetailPresenter = withRouter(
                   ))}
                 </TrailerContainer>
               </TabPanel>
-              <TabPanel>
-                <CollectionConatainer>
-                  {result.belongs_to_collection && (
-                    <>
-                      <CollectionExist>Watch Other Series?</CollectionExist>
-                      <Link
-                        to={`/collection/${result.belongs_to_collection.id}`}
-                      >
-                        <CollectionLink>➜</CollectionLink>
-                      </Link>
-                    </>
-                  )}
-                </CollectionConatainer>
-              </TabPanel>
+              {pathname.includes("movie") && (
+                <TabPanel>
+                  <CollectionConatainer>
+                    {result.belongs_to_collection && (
+                      <>
+                        <CollectionExist>Watch Other Series?</CollectionExist>
+                        <Link
+                          to={`/collection/${result.belongs_to_collection.id}`}
+                        >
+                          <CollectionLink>➜</CollectionLink>
+                        </Link>
+                      </>
+                    )}
+                  </CollectionConatainer>
+                </TabPanel>
+              )}
+
+              {pathname.includes("show") && (
+                <TabPanel>
+                  <SeasonContainer>
+                    {result.seasons &&
+                      result.seasons.map((season) => (
+                        <Seasons key={season.id}>
+                          <SeasonImg
+                            src={
+                              season.poster_path
+                                ? `https://image.tmdb.org/t/p/original${season.poster_path}`
+                                : "https://user-images.githubusercontent.com/62231339/123796388-0c17cf80-d920-11eb-87d7-50dc9e5b628d.jpg"
+                            }
+                            alt="creator img"
+                          ></SeasonImg>
+                          <SeasonName>
+                            #{season.season_number}. {season.name}
+                          </SeasonName>
+                        </Seasons>
+                      ))}
+                  </SeasonContainer>
+                </TabPanel>
+              )}
             </DetailTabs>
           </Data>
         </Content>
