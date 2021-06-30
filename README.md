@@ -4,18 +4,16 @@ Using React and ES6 building a Movie Discovery App.
 
 ## Screens
 
-- [] Home
-- [] TV Shows
-- [] Search
-- [] Detail
+- Home: Popular, Now Playing, Upcoming movies
+- TV Shows:Top Rated, Popular, Airing Today Tv shows
+- Search: Search Movies & Tv shows
+- Detail: See More Details of Movies & Tv shows
+- Collection: See Series of Movies
 
-## API Verbs
+## API Used
 
-- [x] Now playing (Movies)
-- [x] Top Rated (TV)
-- [x] Popular (TV, Movies)
-- [x] Upcoming (Movies)
-- [x] Airing Today (TV)
-- [x] TV Show Detail
-- [x] Movie Detail
-- [x] Search (Movie, TV)
+- The Movie Database API
+
+## Netlify Site
+
+- [Wooflix](https://infallible-chandrasekhar-96cefd.netlify.app/)
